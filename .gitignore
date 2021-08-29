@@ -1,0 +1,4 @@
+
+venv_*
+ignore_*
+db.sqlite3

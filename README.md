@@ -1,4 +1,19 @@
-# Invera ToDo-List Challenge (Python/Django Jr-SSr)
+# Invera ToDo-List Challenge 
+> Python/Django Jr-SSr
+
+# Tabla de contenidos
+
+- [Invera ToDo-List Challenge](#invera-todo-list-challenge)
+- [Tabla de contenidos](#tabla-de-contenidos)
+- [Enunciado](#enunciado)
+  - [Qué queremos que hagas:](#qué-queremos-que-hagas)
+  - [Objetivos:](#objetivos)
+  - [Qué evaluamos:](#qué-evaluamos)
+  - [Requerimientos de entrega:](#requerimientos-de-entrega)
+- [Levantar localmente](#levantar-localmente)
+  - [Correr directamente](#correr-directamente)
+
+# Enunciado
 
 El propósito de esta prueba es conocer tu capacidad para crear una pequeña aplicación funcional en un límite de tiempo. A continuación, encontrarás las funciones, los requisitos y los puntos clave que debés tener en cuenta durante el desarrollo.
 
@@ -33,3 +48,22 @@ El usuario de la aplicación tiene que ser capaz de:
 - El Readme debe contener todas las instrucciones para poder levantar la aplicación, en caso de ser necesario, y explicar cómo se usa.
 - Disponibilidad para realizar una pequeña demo del proyecto al finalizar el challenge.
 - Tiempo para la entrega: Aproximadamente 7 días.
+
+# Levantar localmente
+
+## Correr directamente
+
+Crear venv e instalar requisitos:
+
+```bash
+python3 -m venv venv_invera_todo
+source venv_invera_todo/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Levantar server
+
+```bash
+python manage.py runserver
+```

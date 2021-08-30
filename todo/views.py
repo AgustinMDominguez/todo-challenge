@@ -1,3 +1,4 @@
+import json
 from todo.model_utils import FilterDictValidator
 from django.db.utils import IntegrityError
 from django.contrib.auth import authenticate
@@ -119,7 +120,11 @@ def get_add_task_dictionary(request) -> dict:
 @return_exception
 @withlogin
 def search_tasks(request):
-    result = {"tasks": get_tasks_by_filter_dict(request.GET)}
+    tasks = get_tasks_by_filter_dict(request.GET, request.profile)
+    result = {
+        "amount": len(tasks),
+        "tasks": tasks
+    }
     return get_json_response(dictionary=result)
 
 
@@ -149,7 +154,8 @@ def get_valid_task_or_raise(request, task_id):
 @withlogin
 def done(request, task_id):
     task: Task = get_valid_task_or_raise(request, task_id)
-    done = request.GET.get("done", None)
+    json_dictionary = post_json_or_raise(request)
+    done = json_dictionary.get("done", None)
     if done is None:
         raise BadRequestException("missing param: done")
     task.done = done
@@ -161,10 +167,11 @@ def done(request, task_id):
 @withlogin
 def update_task(request, task_id):
     task: Task = get_valid_task_or_raise(request, task_id)
-    dict_validator = FilterDictValidator(request.GET)
+    json_dictionary = post_json_or_raise(request)
+    dict_validator = FilterDictValidator(json_dictionary)
     valid_dic = dict_validator.validate_updateable_fields()
-    task.update(**valid_dic)
-    task.save()
+    Task.objects.filter(id=task.id).update(**valid_dic)
+    task = Task.objects.get(id=task.id)
     return get_json_response(dictionary=task.get_dict_repr())
 
 

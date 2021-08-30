@@ -27,7 +27,7 @@ class FilterDictValidator():
             "done",
             "tags",
             "title",
-            "favorite"
+            "favorite",
             "parent_id",
             "description"
         ]
@@ -48,7 +48,8 @@ class FilterDictValidator():
         return self._get_validated_dictionary(include)
 
     def _get_validated_dictionary(self, include: list = []):
-        log.debug(f"_get_validated_dictionary include: {include}")
+        log.debug(f"_get_validated_dictionary include: {include}.")
+        log.debug(f"_get_validated_dictionary dictionary: {self.initdic}")
         valid_dic = {}
         args_schema = self.args_schema.copy()
         exclude_args = []
@@ -88,10 +89,10 @@ class FilterDictValidator():
                     )
 
         start_time = get_datetime(self.initdic.get("start_time", None))
-        if start_time is not None and "start_time" not in include:
+        if start_time is not None and "start_time" in include:
             valid_dic["start_time"] = start_time
         end_time = get_datetime(self.initdic.get("end_time", None))
-        if end_time is not None and "end_time" not in include:
+        if end_time is not None and "end_time" in include:
             valid_dic["end_time"] = end_time
 
         return valid_dic

@@ -74,6 +74,8 @@ class Task(models.Model):
         dict_validator = FilterDictValidator(task_dict)
         valid_dic = dict_validator.validate_updateable_fields()
 
+        valid_dic["profile"] = profile
+
         if "parent_id" in valid_dic.keys():
             parent = cls.objects.filter(id=valid_dic["parent_id"]).first()
             if parent is not None and parent.profile == profile:
@@ -107,9 +109,9 @@ class Task(models.Model):
         if tags is not None:
             queryset = cls.filter_by_tags(queryset, tags)
         if start_time is not None:
-            queryset = queryset.filter(start_time__gt=start_time)
+            queryset = queryset.filter(created_at__gt=start_time)
         if end_time is not None:
-            queryset = queryset.filter(end_time__lt=start_time)
+            queryset = queryset.filter(created_at__lt=end_time)
         return cls.get_queryset_page(queryset, page)
 
     @classmethod

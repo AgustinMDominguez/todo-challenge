@@ -1,6 +1,13 @@
 # Invera ToDo-List Challenge 
 > Python/Django Jr-SSr
 
+**Super User:**
+```
+username: admin
+email: admin@email.com
+password: admin
+```
+
 # Tabla de contenidos
 
 - [Invera ToDo-List Challenge](#invera-todo-list-challenge)
@@ -12,6 +19,7 @@
   - [Requerimientos de entrega:](#requerimientos-de-entrega)
 - [Levantar localmente](#levantar-localmente)
   - [Correr directamente](#correr-directamente)
+- [Referencias Usadas](#referencias-usadas)
 
 # Enunciado
 
@@ -67,3 +75,8 @@ Levantar server
 ```bash
 python manage.py runserver
 ```
+
+# Referencias Usadas
+
+ - [Usar tokens para autenticacion en Django](https://www.django-rest-framework.org/api-guide/authentication/#setting-the-authentication-scheme)
+ - [Django default auth](https://docs.djangoproject.com/en/3.2/topics/auth/default/)

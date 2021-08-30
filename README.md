@@ -80,6 +80,7 @@ python manage.py runserver
 # Estilo y estructura
 
 ```bash
+pycodestyle . --exclude=venv_*,**migrations**
 ```
 
 # Referencias Usadas

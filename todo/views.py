@@ -47,7 +47,7 @@ def login(request):
     if user is None:
         return HttpResponseForbidden("Auth failed")
     profiles_query = Profile.objects.filter(user=user)
-    result = {"profiles":[]}
+    result = {"profiles": []}
     for profile in profiles_query:
         result["profiles"].append({
             "name": profile.name,
@@ -66,4 +66,3 @@ def is_logged_in(request):
         "profile": request.profile.name
     }
     return get_json_response(dictionary=dic)
-

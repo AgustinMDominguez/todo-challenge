@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 
 from project.logger import Logger
+from todo.model_utils import FilterDictValidator
 
 
 log = Logger.logger()
@@ -70,38 +71,16 @@ class Task(models.Model):
 
     @classmethod
     def create_task(cls, profile: Profile, task_dict: dict):
-        args_schema = {
-            "description": str,
-            "favorite": bool
-        }
-        task_kwargs = {
-            "title": task_dict["title"],
-            "profile": profile
-        }
-        tags = task_dict.get("tags", None)
-        if tags is not None:
-            try:
-                assert isinstance(tags, list)
-                for tag in tags:
-                    assert isinstance(tag, str)
-                task_kwargs["tags"] = tags
-            except Exception as e:
-                log.error(f"Tags '{tags}' are malformed. Error: {e}")
+        dict_validator = FilterDictValidator(task_dict)
+        valid_dic = dict_validator.validate_updateable_fields()
 
-        for arg in args_schema:
-            if arg in task_dict.keys():
-                try:
-                    assert isinstance(task_dict[arg], args_schema[arg])
-                    task_kwargs[arg] = task_dict[arg]
-                except Exception:
-                    log.error(f"argument {arg} is not {args_schema[arg]}")
-
-        if "parent_id" in task_dict.keys():
-            parent = cls.objects.filter(id=task_dict["parent_id"]).first()
+        if "parent_id" in valid_dic.keys():
+            parent = cls.objects.filter(id=valid_dic["parent_id"]).first()
             if parent is not None and parent.profile == profile:
-                task_kwargs["parent"] = parent
+                valid_dic["parent"] = parent
+                valid_dic.pop("parent_id")
 
-        return cls.objects.create(**task_kwargs)
+        return cls.objects.create(**valid_dic)
 
     @classmethod
     def get_filtered_tasks(

@@ -1,5 +1,5 @@
-import ast
-
+from todo.model_utils import FilterDictValidator
+from django.db.utils import IntegrityError
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.http.response import HttpResponseForbidden
@@ -8,9 +8,9 @@ from project.logger import Logger
 from todo.models import Profile, Task
 from .request_utils import (
     BadRequestException,
-    get_datetime,
     withlogin,
     return_exception,
+    NotFoundException,
     get_json_response,
     post_json_or_raise,
 )
@@ -68,9 +68,30 @@ def check_token(request):
     return get_json_response(dictionary=dic)
 
 
+@return_exception
+@withlogin
 def create_profile(request):
-    return get_json_response()
+    json_dictionary = post_json_or_raise(request)
+    profile_name = json_dictionary["name"]
 
+    try:
+        profile = Profile.objects.create(
+            user=request.user,
+            name=profile_name
+        )
+        profile.save()
+        profile.token = profile.generate_token()
+        profile.save()
+        result = {
+            "name": profile.name,
+            "token": profile.token
+        }
+        return get_json_response(dictionary=result)
+    except IntegrityError:
+        error_dic = {
+            "error": "User already has a profile with that name"
+        }
+        return get_json_response(status="conflict", dictionary=error_dic)
 
 @return_exception
 @withlogin
@@ -97,76 +118,68 @@ def get_add_task_dictionary(request) -> dict:
 @return_exception
 @withlogin
 def search_tasks(request):
-    validated_dictionary = get_validated_filter_task_dict(request.GET)
-    validated_dictionary["profile"] = request.profile
-    log.info(f"Searching tasks with query {validated_dictionary}")
-    queryset = Task.get_filtered_tasks(**validated_dictionary)
-    result = {"tasks": []}
-    for task in queryset:
-        result["tasks"].append(task.get_dict_repr())
+    result = {"tasks": get_tasks_by_filter_dict(request.GET)}
     return get_json_response(dictionary=result)
 
 
-def get_validated_filter_task_dict(reqdic: dict) -> dict:
-    valid_dic = {}
-    args_schema = {
-        "parent_id": int,
-        "title": str,
-        "favorite": bool,
-        "page": int,
-        "search_sub_tree": bool,
-        "done": bool,
-    }
+def get_tasks_by_filter_dict(dictionary, profile):
+    dict_validator = FilterDictValidator(dictionary)
+    validated_dictionary = dict_validator.validate_search_dictionary()
+    validated_dictionary["profile"] = profile
+    log.info(f"Searching tasks with query {validated_dictionary}")
+    queryset = Task.get_filtered_tasks(**validated_dictionary)
+    tasks = []
+    for task in queryset:
+        tasks.append(task.get_dict_repr())
+    return tasks
 
-    tags = reqdic.get("tags", None)
-    if tags is not None:
-        try:
-            assert isinstance(tags, list)
-            for tag in tags:
-                assert isinstance(tag, str)
-            valid_dic["tags"] = tags
-        except Exception as e:
-            log.error(f"Tags '{tags}' are malformed. Error: {e}")
 
-    for arg in args_schema:
-        if arg in reqdic.keys():
-            try:
-                eval = ast.literal_eval(reqdic[arg])
-                assert isinstance(eval, args_schema[arg])
-                valid_dic[arg] = eval
-            except Exception as e:
-                log.error(e)
-                log.error(f"argument {arg} is not {args_schema[arg]}")
-
-    start_time = get_datetime(reqdic.get("start_time", None))
-    if start_time is not None:
-        valid_dic["start_time"] = start_time
-    end_time = get_datetime(reqdic.get("end_time", None))
-    if end_time is not None:
-        valid_dic["end_time"] = end_time
-
-    return valid_dic
+def get_valid_task_or_raise(request, task_id):
+    task = Task.objects.filter(id=task_id).first()
+    profile = request.profile
+    if task is not None and task.profile == profile:
+        return task
+    raise NotFoundException(
+        f"Could not find task {task_id} for profile {profile.id}"
+    )
 
 
 @return_exception
 @withlogin
 def done(request, task_id):
-    return get_json_response()
+    task: Task = get_valid_task_or_raise(request, task_id)
+    done = request.GET.get("done", None)
+    if done is None:
+        raise BadRequestException("missing param: done")
+    task.done = done
+    task.save()
+    return get_json_response(dictionary=task.get_dict_repr())
 
 
 @return_exception
 @withlogin
 def update_task(request, task_id):
-    return get_json_response()
+    task: Task = get_valid_task_or_raise(request, task_id)
+    dict_validator = FilterDictValidator(request.GET)
+    valid_dic = dict_validator.validate_updateable_fields()
+    task.update(**valid_dic)
+    task.save()
+    return get_json_response(dictionary=task.get_dict_repr())
 
 
 @return_exception
 @withlogin
 def delete_task(request, task_id):
-    return get_json_response()
+    task: Task = get_valid_task_or_raise(request, task_id)
+    task.delete()
+    return get_json_response(dictionary={"deleted": True})
 
 
 @return_exception
 @withlogin
 def task_children(request, task_id):
-    return get_json_response()
+    task = get_valid_task_or_raise(request, task_id)
+    filter_dictionary = request.GET.copy()
+    filter_dictionary["parent_id"] = task.id
+    tasks = get_tasks_by_filter_dict(filter_dictionary, request.profile)
+    return get_json_response(dictionary={"tasks": tasks})

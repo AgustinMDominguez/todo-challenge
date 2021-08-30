@@ -1,4 +1,3 @@
-from django.contrib import auth
 from django.http.response import HttpResponseBadRequest
 
 from project.logger import Logger

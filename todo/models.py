@@ -1,13 +1,16 @@
 import jwt
 from django.db import models
-from django.contrib.auth.models import User
 from django.conf import settings
+from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     token = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        unique_together = ('user', 'name')
 
     def generate_token(self):
         dic = {"id": self.id, "name": self.name, "user": self.user.username}

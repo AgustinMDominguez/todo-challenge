@@ -1,5 +1,4 @@
 import json
-from django.contrib.auth.models import AnonymousUser
 from django.http.response import (
     HttpResponseNotFound,
     HttpResponseBadRequest,

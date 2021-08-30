@@ -93,6 +93,7 @@ def create_profile(request):
         }
         return get_json_response(status="conflict", dictionary=error_dic)
 
+
 @return_exception
 @withlogin
 def add_task(request):

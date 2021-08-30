@@ -83,7 +83,8 @@ class FilterDictValidator():
                     log.error(e)
                     log.error(
                         f"argument {arg} is not {args_schema[arg]}. Arg:"
-                        f" {self.initdic[arg]} of type {type(self.initdic[arg])}"
+                        f" {self.initdic[arg]} of type "
+                        f"{type(self.initdic[arg])}"
                     )
 
         start_time = get_datetime(self.initdic.get("start_time", None))

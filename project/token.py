@@ -13,7 +13,6 @@ class TokenMiddleware:
 
     def __call__(self, request):
         auth_header = request.META.get('HTTP_AUTHORIZATION', b'').split()
-        log.info(f"AUTH: {auth_header}")
 
         if auth_header and auth_header[0].lower() == 'token':
             if len(auth_header) != 2:

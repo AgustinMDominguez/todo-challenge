@@ -1,4 +1,6 @@
 import json
+import iso8601
+from datetime import datetime
 from django.http.response import (
     HttpResponseNotFound,
     HttpResponseBadRequest,
@@ -61,7 +63,20 @@ def return_exception(func):
     return wraps
 
 
-def logged_in(func):
+def get_datetime(dt):
+    if isinstance(dt, str):
+        try:
+            parse = iso8601.parse_date(dt.strip('"'))
+        except iso8601.iso8601.ParseError:
+            return None
+        return parse
+    elif isinstance(dt, datetime):
+        return dt
+    else:
+        return None
+
+
+def withlogin(func):
     def wraps(*args, **kwargs):
         try:
             assert args[0].user.is_authenticated

@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'todo.apps.TodoConfig',
-    'rest_auth'
+    'rest_auth',
+    "taggit"
 ]
 
 REST_FRAMEWORK = {

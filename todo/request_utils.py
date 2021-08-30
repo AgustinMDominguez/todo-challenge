@@ -1,4 +1,5 @@
 import json
+from django.contrib.auth.models import AnonymousUser
 from django.http.response import (
     HttpResponseNotFound,
     HttpResponseBadRequest,
@@ -57,5 +58,16 @@ def return_exception(func):
         except BadRequestException as e:
             ret = HttpResponseBadRequest(e.args[0])
             log.error(f"{ret} - {e.args[0]}")
+        return ret
+    return wraps
+
+
+def logged_in(func):
+    def wraps(*args, **kwargs):
+        try:
+            assert args[0].user.is_authenticated
+            ret = func(*args, **kwargs)
+        except AssertionError:
+            ret = HttpResponseForbidden("Missing Token")
         return ret
     return wraps

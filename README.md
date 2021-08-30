@@ -19,6 +19,7 @@ password: admin
   - [Requerimientos de entrega:](#requerimientos-de-entrega)
 - [Levantar localmente](#levantar-localmente)
   - [Correr directamente](#correr-directamente)
+- [Estilo y estructura](#estilo-y-estructura)
 - [Referencias Usadas](#referencias-usadas)
 
 # Enunciado
@@ -74,6 +75,11 @@ Levantar server
 
 ```bash
 python manage.py runserver
+```
+
+# Estilo y estructura
+
+```bash
 ```
 
 # Referencias Usadas

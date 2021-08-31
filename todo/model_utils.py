@@ -60,12 +60,18 @@ class FilterDictValidator():
             args_schema.pop(exclude_arg)
 
         tags = self.initdic.get("tags", None)
-        if tags is not None and "tags" not in include:
+        if tags is not None and "tags" in include:
             try:
-                assert isinstance(tags, list)
-                for tag in tags:
-                    assert isinstance(tag, str)
-                valid_dic["tags"] = tags
+                if isinstance(tags, list):
+                    for tag in tags:
+                        assert isinstance(tag, str)
+                    valid_dic["tags"] = tags
+                else:
+                    eval = ast.literal_eval(self.initdic["tags"])
+                    assert isinstance(eval, list)
+                    for tag in eval:
+                        assert isinstance(tag, str)
+                    valid_dic["tags"] = eval
             except Exception as e:
                 log.error(f"Tags '{tags}' are malformed. Error: {e}")
 

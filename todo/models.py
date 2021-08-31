@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from taggit.managers import TaggableManager
 
 from project.logger import Logger
@@ -22,6 +23,17 @@ class Profile(models.Model):
 
     class Meta:
         unique_together = ('user', 'name')
+
+    def __str__(self) -> str:
+        return f"{self.user.username}/{self.name}"
+
+    def get_dict_repr(self) -> dict:
+        dic = {
+            "name": self.name,
+            "user": self.user.username,
+            "token": self.token
+        }
+        return dic
 
     def generate_token(self):
         dic = {"id": self.id, "name": self.name, "user": self.user.username}
@@ -40,9 +52,6 @@ class Profile(models.Model):
             return profile
         except Exception:
             return None
-
-    def __str__(self) -> str:
-        return f"{self.user.username}/{self.name}"
 
 
 class Task(models.Model):
@@ -67,6 +76,7 @@ class Task(models.Model):
         resultdic = json.loads(json.dumps(self.__dict__, default=str))
         resultdic.pop("_state", None)
         resultdic.pop("profile_id", None)
+        resultdic["tags"] = list(self.tags.names())
         return resultdic
 
     @classmethod
@@ -80,9 +90,14 @@ class Task(models.Model):
             parent = cls.objects.filter(id=valid_dic["parent_id"]).first()
             if parent is not None and parent.profile == profile:
                 valid_dic["parent"] = parent
-                valid_dic.pop("parent_id")
+            valid_dic.pop("parent_id") 
 
-        return cls.objects.create(**valid_dic)
+        log.debug(f"Creating task with dic {valid_dic}")
+        tags = valid_dic.pop("tags", None)
+        task = cls.objects.create(**valid_dic)
+        if tags is not None:
+            task.tags.add(*tags)
+        return task
 
     @classmethod
     def get_filtered_tasks(
@@ -94,7 +109,7 @@ class Task(models.Model):
         done: bool = None,
         start_time: datetime = None,
         end_time: datetime = None,
-        page: int = 0,
+        page: int = 1,
         search_sub_tree: bool = False
     ) -> QuerySet:
         queryset = cls.objects.filter(profile=profile)
@@ -107,7 +122,7 @@ class Task(models.Model):
         if done is not None:
             queryset = queryset.filter(done=done)
         if tags is not None:
-            queryset = cls.filter_by_tags(queryset, tags)
+            queryset = cls.filter_by_tags(queryset, tags, profile)
         if start_time is not None:
             queryset = queryset.filter(created_at__gt=start_time)
         if end_time is not None:
@@ -115,9 +130,20 @@ class Task(models.Model):
         return cls.get_queryset_page(queryset, page)
 
     @classmethod
-    def filter_by_tags(cls, queryset: QuerySet, tags: list) -> QuerySet:
+    def filter_by_tags(
+        cls,
+        queryset: QuerySet,
+        tags: list,
+        profile: Profile
+    ) -> QuerySet:
+        tag_queryset = cls.objects.filter(
+            profile=profile,
+            tags__name__in=tags
+        ).distinct()
+        queryset = queryset.intersection(tag_queryset)
         return queryset
 
     @classmethod
     def get_queryset_page(cls, queryset: QuerySet, page: int) -> QuerySet:
-        return queryset
+        paginator = Paginator(queryset.order_by("created_at"), 50)
+        return paginator.page(page).object_list

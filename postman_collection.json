@@ -1,0 +1,549 @@
+{
+	"info": {
+		"_postman_id": "c20a9af2-d667-4b99-9c0b-844c37e03e68",
+		"name": "Invera To Do",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "backend online",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/todo/up",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "backend online Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/todo/up",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"todo",
+						"up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Vale\",\n    \"password\": \"uwu\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/todo/login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "is Loggued In",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{PROFILE_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/todo/logged_in",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"logged_in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Vale\",\n    \"email\": \"vale@uwu.com\",\n    \"password\": \"uwu\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/todo/register",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rename profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{PROFILE_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"old_profile_name\": \"study\",\n    \"new_profile_name\": \"other study\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/todo/rename-profile",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"rename-profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{PROFILE_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"profile_name\": \"other study\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/todo/delete-profile",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"delete-profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create Profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{PROFILE_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"work\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/todo/create-profile",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"create-profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add Task",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{PROFILE_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Ssub tarea decir hola a agus\",\n    \"description\": \"esto deberia andar bien\",\n    \"parent_id\": 9,\n    \"tags\": [\"apple\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/todo/add-task",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"add-task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task done",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{PROFILE_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"done\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/todo/task/1/done",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"task",
+						"1",
+						"done"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task update",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{PROFILE_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"done\": true,\n    \"description\": \"nueva descric\",\n    \"title\": \"Otro Titulo\",\n    \"favorite\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/todo/task/8/update",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"task",
+						"8",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task delete",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{PROFILE_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/todo/task/1/delete",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"task",
+						"1",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task children",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{PROFILE_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Child of 4\",\n    \"parent_id\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/todo/task/2/children",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"task",
+						"2",
+						"children"
+					],
+					"query": [
+						{
+							"key": "search_sub_tree",
+							"value": "False",
+							"disabled": true
+						},
+						{
+							"key": "done",
+							"value": "False",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search tasks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{PROFILE_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Child of 4\",\n    \"parent_id\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/todo/search-tasks?search_sub_tree=True&done=False&parent_id=9&tags=[\"apple\", \"some\"]",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"search-tasks"
+					],
+					"query": [
+						{
+							"key": "search_sub_tree",
+							"value": "True"
+						},
+						{
+							"key": "done",
+							"value": "False"
+						},
+						{
+							"key": "parent_id",
+							"value": "9"
+						},
+						{
+							"key": "tags",
+							"value": "[\"apple\", \"some\"]"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search task date range",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{PROFILE_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Child of 4\",\n    \"parent_id\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/todo/search-tasks?search_sub_tree=True&start_time=2021-08-30T18:35:00.000Z&end_time=2021-08-30T18:37:00.000Z",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"todo",
+						"search-tasks"
+					],
+					"query": [
+						{
+							"key": "search_sub_tree",
+							"value": "True"
+						},
+						{
+							"key": "start_time",
+							"value": "2021-08-30T18:35:00.000Z"
+						},
+						{
+							"key": "end_time",
+							"value": "2021-08-30T18:37:00.000Z"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://127.0.0.1:8000"
+		},
+		{
+			"key": "PROFILE_TOKEN",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6ImRlZmF1bHQiLCJ1c2VyIjoiVmFsZSJ9.OhT3mpYjt3_ZLRcV_C_9WdOCCW4j9-ZuOBcXDUZQ058"
+		}
+	]
+}

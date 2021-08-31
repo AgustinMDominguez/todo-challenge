@@ -27,16 +27,19 @@ def check_if_online(request):
 @return_exception
 def register(request):
     json_dictionary = post_json_or_raise(request)
-    username = json_dictionary["username"]
-    email = json_dictionary["email"]
-    password = json_dictionary["password"]
+    try:
+        username = json_dictionary["username"]
+        email = json_dictionary["email"]
+        password = json_dictionary["password"]
+    except KeyError:
+        raise BadRequestException("Missing keys in json")
     user = User.objects.create_user(username, email, password)
     user.save()
-    profile = Profile.objects.create(user=user, name="default")
+    profile: Profile = Profile.objects.create(user=user, name="default")
     profile.save()
     profile.token = profile.generate_token()
     profile.save()
-    return get_json_response()
+    return get_json_response(dictionary=profile.get_dict_repr())
 
 
 @return_exception
@@ -93,6 +96,47 @@ def create_profile(request):
             "error": "User already has a profile with that name"
         }
         return get_json_response(status="conflict", dictionary=error_dic)
+
+
+@return_exception
+@withlogin
+def rename_profile(request):
+    json_dictionary = post_json_or_raise(request)
+    try:
+        old_name = json_dictionary["old_profile_name"]
+        new_name = json_dictionary["new_profile_name"]
+    except KeyError:
+        raise BadRequestException("Missing old_name or new_name keys")
+    profile = Profile.objects.filter(user=request.user, name=old_name).first()
+    if profile is None:
+        return NotFoundException("Could not find profile")
+    try:
+        profile.name = new_name
+        profile.save()
+    except IntegrityError:
+        error_dic = {"error": "User already has a profile with that name"}
+        return get_json_response(status="conflict", dictionary=error_dic)
+
+    profile.token = profile.generate_token()
+    profile.save()
+    return get_json_response(dictionary=profile.get_dict_repr())
+
+
+@return_exception
+@withlogin
+def delete_profile(request):
+    json_dictionary = post_json_or_raise(request)
+    try:
+        profile_name = json_dictionary["profile_name"]
+    except KeyError:
+        raise BadRequestException("Missing profile_name")
+    profile: Profile = Profile.objects.filter(
+        user=request.user,
+        name=profile_name
+    ).first()
+    if profile is not None:
+        profile.delete()
+    return get_json_response(dictionary={"deleted": True})
 
 
 @return_exception
@@ -189,5 +233,6 @@ def task_children(request, task_id):
     task = get_valid_task_or_raise(request, task_id)
     filter_dictionary = request.GET.copy()
     filter_dictionary["parent_id"] = task.id
+    filter_dictionary["search_sub_tree"] = True
     tasks = get_tasks_by_filter_dict(filter_dictionary, request.profile)
     return get_json_response(dictionary={"tasks": tasks})

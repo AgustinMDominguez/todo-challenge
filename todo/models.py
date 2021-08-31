@@ -90,7 +90,7 @@ class Task(models.Model):
             parent = cls.objects.filter(id=valid_dic["parent_id"]).first()
             if parent is not None and parent.profile == profile:
                 valid_dic["parent"] = parent
-            valid_dic.pop("parent_id") 
+            valid_dic.pop("parent_id")
 
         log.debug(f"Creating task with dic {valid_dic}")
         tags = valid_dic.pop("tags", None)

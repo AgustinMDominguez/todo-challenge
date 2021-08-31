@@ -23,6 +23,7 @@
   - [search-tasks](#search-tasks)
 - [Estilo y estructura](#estilo-y-estructura)
 - [Referencias Usadas](#referencias-usadas)
+- [Problemas conocidos / posibles mejoras](#problemas-conocidos--posibles-mejoras)
 
 # Enunciado
 
@@ -167,3 +168,9 @@ pycodestyle . --exclude=venv_*,**migrations**
  - [Expose vs publish Docker](https://www.baeldung.com/ops/docker/expose-vs-publish)
  - [Django Pagination](https://docs.djangoproject.com/en/3.2/topics/pagination/)
  - [django-taggit](https://django-taggit.readthedocs.io/en/latest/api.html)
+
+# Problemas conocidos / posibles mejoras
+
+ - No hay prevención de subtareas circulares
+ - La búsqueda por titulo es exacta cuando podría ser más elástica
+   - Posible solución: Incorporar como tags e ignorando stop-words

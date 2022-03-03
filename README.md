@@ -1,71 +1,79 @@
+> Spanish README.md here -> [README_ES.md](README_ES.md)
+
 # Invera ToDo-List Challenge
-> Python/Django Jr-SSr
+> Technical interview challenge for a SSr Python/Django position
 
-**Autor:** Agustín Marcelo Domínguez: `agustinmarcelodominguez@gmail.com`
+> **Author:** Agustín Marcelo Domínguez: `agustinmarcelodominguez@gmail.com`
 
-**Fecha** Agosto 2021
+> **Date** August 2021
 
-# Tabla de contenidos
+# Table of contents
 
 - [Invera ToDo-List Challenge](#invera-todo-list-challenge)
-- [Tabla de contenidos](#tabla-de-contenidos)
-- [Enunciado](#enunciado)
-  - [Qué queremos que hagas](#qué-queremos-que-hagas)
-  - [Objetivos](#objetivos)
-  - [Qué evaluamos](#qué-evaluamos)
-  - [Requerimientos de entrega](#requerimientos-de-entrega)
-- [Levantar localmente](#levantar-localmente)
-  - [Correr directamente](#correr-directamente)
-  - [Docker](#docker)
-  - [Postman](#postman)
-- [Endpoints](#endpoints)
-  - [Descripcion General](#descripcion-general)
-  - [search-tasks](#search-tasks)
-- [Estilo y estructura](#estilo-y-estructura)
-- [Referencias Usadas](#referencias-usadas)
-- [Problemas conocidos / posibles mejoras](#problemas-conocidos--posibles-mejoras)
+- [Table of contents](#table-of-contents)
+- [Challenge](#challenge)
+  - [Intro](#intro)
+  - [What we want you to do](#what-we-want-you-to-do)
+  - [Objetives](#objetives)
+  - [What we will value in the product](#what-we-will-value-in-the-product)
+  - [Devivery Requirements](#devivery-requirements)
+- [Delivery and Product](#delivery-and-product)
+  - [Run Locally](#run-locally)
+    - [Direct Run](#direct-run)
+    - [Docker](#docker)
+    - [Postman](#postman)
+  - [Endpoints](#endpoints)
+    - [General Description](#general-description)
+    - [search-tasks](#search-tasks)
+  - [Style and architecture](#style-and-architecture)
+  - [References](#references)
+  - [Known bugs / potential improvements](#known-bugs--potential-improvements)
 
-# Enunciado
+# Challenge
 
-El propósito de esta prueba es conocer tu capacidad para crear una pequeña aplicación funcional en un límite de tiempo. A continuación, encontrarás las funciones, los requisitos y los puntos clave que debés tener en cuenta durante el desarrollo.
+## Intro
 
-## Qué queremos que hagas
+The purpose of this test is to get to know your ability to create a small functional application with a deadline. Below you'll find the functions, the requirements, and key points to have in mind during development.
 
-- El Challenge consiste en crear una aplicación web sencilla que permita a los usuarios crear y mantener una lista de tareas.
-- La entrega del resultado será en un nuevo fork de este repo y deberás hacer una pequeña demo del funcionamiento y desarrollo del proyecto ante un super comité de las más grandes mentes maestras de Invera, o a un par de devs, lo que sea más fácil de conseguir.
-- Podes contactarnos en caso que tengas alguna consulta.
+## What we want you to do
 
-## Objetivos
+- This challenge consists of creating a simple web application that allows users to create and hold a list of ToDos.
+- The delivery of the product must be a new fork of this repository and you'll need to do a small demo of the functionality and development of the proyect before a super committee of the greatest minds at Invera, or some devs, whatever is easier to get.
+- You can contact us if you have questions.
 
-El usuario de la aplicación tiene que ser capaz de
+## Objetives
 
-- Crear una tarea
-- Eliminar una tarea
-- Marcar tareas como completadas
-- Poder ver una lista de todas las tareas existentes
-- Filtrar/buscar tareas por fecha de creación y/o por el contenido de la misma
+The user of the aplication must be capable of:
 
-## Qué evaluamos
+- Create a task
+- Delete a task
+- Set tasks as "Done"
+- Get a list of the current existing tasks
+- Filter/search tasks by date of creation and content
 
-- Desarrollo utilizando Python, Django. No es necesario crear un Front-End, pero sí es necesario tener una API que permita cumplir con los objetivos de arriba.
-- Calidad y arquitectura de código. Facilidad de lectura y mantenimiento del código. Estándares seguidos.
-- [Bonus] Manejo de logs.
-- [Bonus] Creación de tests (unitarias y de integración)
-- [Bonus] Unificar la solución propuesta en una imagen de Docker por repositorio para poder ser ejecutada en cualquier ambiente (si aplica para full stack).
+## What we will value in the product 
 
-## Requerimientos de entrega
+- Development using Python, and Django. Development of the Front-End side is not necessary, but it is necessary the the backend API that can fufill the objectives.
+- Architecture and code quality. Code readability and ease of maintenance.
+- **[Bonus]** Log management.
+- **[Bonus]** Implementation of Tests (Integration Tests and Unit Tests)
+- **[Bonus]** Delivery of solution in a Docker Image.
 
-- Hacer un fork del proyecto y pushearlo en github. Puede ser privado.
-- La solución debe correr correctamente.
-- El Readme debe contener todas las instrucciones para poder levantar la aplicación, en caso de ser necesario, y explicar cómo se usa.
-- Disponibilidad para realizar una pequeña demo del proyecto al finalizar el challenge.
-- Tiempo para la entrega: Aproximadamente 7 días.
+## Devivery Requirements
 
-# Levantar localmente
+- Fork the proyect and push it to GitHub. It can private.
+- Solution must run correctly.
+- README must contain instructions on how to properly setup and run the solution.
+- Availability to perform a little demo of the proyect upon completion.
+- Delivery time: 7 days.
+  
 
-## Correr directamente
+# Delivery and Product
+## Run Locally
 
-Crear venv e instalar requisitos:
+### Direct Run
+
+Create a virtual enviroment and install requirements:
 
 ```bash
 python3 -m venv venv_invera_todo
@@ -74,103 +82,100 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Levantar server
+Run Server
 
 ```bash
 python manage.py runserver
 ```
 
-## Docker
-Correr:
+### Docker
+Run:
 
 ```bash
 docker-compose build && docker-compose up
 ```
 
-Luego se le pueden hacer pedidos a `http://127.0.0.1:8000` (ver sección [Postman](#postman))
+Then requests can be made to `http://127.0.0.1:8000` (see [Postman](#postman) section)
 
-## Postman
+### Postman
 
-Se provee una colección de [Postman](https://www.postman.com/) (el archivo llamado `postman_collection.json`) con ejemplos de los endpoints hechos para probar directamente.
+A [Postman](https://www.postman.com/) collection is provided, (file is called `postman_collection.json`) with examples of endpoints to run directly.
 
-Para usar la colección hay que abrir Postman y poner `import` -> `file` y seleccionar el archivo `postman_collection.json`.
+To import the collection, in Postman go to `import` -> `file` and select collection file `postman_collection.json`.
 
-Tener en cuenta que no se subió la base de datos por lo que luego de correrlo local hay que registrarse, hacer login, y actualizar el la variable de entorno `PROFILE_TOKEN` de la colección.
-Una vez que se le pegue al endpoint `login` y se obtenga el token, hacer doble click en la colección, ir a `variables` y actualizar tanto `INITIAL VALUE` como `CURRENT VALUE` con el token obtenido. Luego hacer una llamada al endpoint `logged_in` debería devolver un 200 con información del usuario y perfil actual.
+Have in mind that the underlying database was not uploaded, so on the first run you must register, login, and update the `PROFILE_TOKEN` enviroment variable of the Postman collection.
 
-# Endpoints
+Once the `login` endpoint is hit and the token is returned, double click on the collection, go to `variables`and update both `INITIAL VALUE` and `CURRENT VALUE` with the token returned. Then hit the `logged_in` endpoint and it should return with 200, with user information and current profile.
 
-**Todos los endpoints que piden un body es en formato json**
+## Endpoints
 
-**Para los endpoints que son *POST* los tipos de los parámetros son parseados como en Javascript (ie. null, true, ...)**
+**All endpoints that ask for a body ask it in JSON format**
+
+**The parameters of *POST* endpoints are parsed in like JavaScript types (ie. null, true, ...)**
+
+**on the other hand, the query parameters of *GET* endpoints are parsed as Python types (ie. None, True, ['apple'])**
+**with the exception of `start_time` y `end_time` which are on isoformat generated by js**
 
 **mientras que cuando los endpoints son *GET* los tipos son parseados como en Python (ie. None, True, ['apple'])**
 **con la excepcion de `start_time` y `end_time` que pueden ser isoformat generado por js**
 
-**Si un perfil es creado o actualizado, se actualiza el token que lo asocia por lo que las siguientes llamadas**
-**a la API deben hacerse con el nuevo token, que se provee en el return de los respectivos endpoints, y**
-**siempre se puede obtener del endpoint `login`**
+**If a profile is created or updated, the token asociated is updated; so further calls to the API must be made with the new token, token which is always provided from the login endpoint**
 
-## Descripcion General
+### General Description
 
 | Type | Endpoint                            | Params/Body                                                             | Return                                                                                    |
 |------|-------------------------------------|-------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
 | GET  | `/todo/up`                          | `None`                                                                  | `{"status": "ok"}`                                                                        |
 | POST | `/todo/register`                    | `{"username": str, "email": str, "password": str}`                      | `{"status": "ok"}`                                                                        |
-| POST | `/todo/login`                       | `{"username": str, "password": str}`                                    | `{"profiles": [{"name": str, "token": "ey..."}]}` Lista de perfiles con sus respectivos TOKEN para autenticar |
-| GET  | `/todo/logged_in`                   | `None`                                                                  | `{"user": str, "profile": str}` si el token es aceptado                                  |
+| POST | `/todo/login`                       | `{"username": str, "password": str}`                                    | `{"profiles": [{"name": str, "token": "ey..."}]}` Lists of profiles with their respective auth tokens |
+| GET  | `/todo/logged_in`                   | `None`                                                                  | `{"user": str, "profile": str}` if the token is accepted                                  |
 | POST | `/todo/create-profile`              | `{"name": str}`                                                         | `{"status": "ok", "result": {"name": str, "token": token}}`                               |
 | POST | `/todo/rename-profile`              | `{"old_profile_name": str, "new_profile_name": str}`                    | `{"status": "ok", "result": {"name": str, "user": str, "token": token}}`                  |
 | POST | `/todo/delete-profile`              | `{"profile_name": str}`                                                 | `{"status": "ok", "result": {"deleted": true}}`                                           |
-| POST | `/todo/add-task`                    | OBLIGATORIO: `title` - OPCIONALES: `parent_id: int, description: str, done: bool, tags: list[str], favorite: bool,` | `{"status": "ok", "result": {"id": int, "parent_id": int, "title": str, "description": str, "done": bool, "favorite": bool, "created_at": datetime}}` |
-| GET  | `/todo/search-tasks`                | Ver [search-tasks](#search-tasks) | `{"status": "ok", "result": {"amount": int, "tasks": [task...]}}`                         |
+| POST | `/todo/add-task`                    | OBLIGATORY: `title` - OPTIONAL: `parent_id: int, description: str, done: bool, tags: list[str], favorite: bool,` | `{"status": "ok", "result": {"id": int, "parent_id": int, "title": str, "description": str, "done": bool, "favorite": bool, "created_at": datetime}}` |
+| GET  | `/todo/search-tasks`                | See [search-tasks](#search-tasks) | `{"status": "ok", "result": {"amount": int, "tasks": [task...]}}`                         |
 | POST | `/todo/task/<int:task_id>/done`     | `{"done": bool}`                                                        | `{"status": "ok", "result": {"id": int, "parent_id": int, "title": str, "description": str, "done": bool, "favorite": bool, "created_at": datetime}}` |
-| POST | `/todo/task/<int:task_id>/update`   | Se pueden actualizar opcionalmente: `title: str, parent_id: int, description: str, done: bool, tags: list[str], favorite: bool` | `{"status": "ok", "result": {"id": int, "parent_id": int, "title": str, "description": str, "done": bool, "favorite": bool, "created_at": datetime}}` |
+| POST | `/todo/task/<int:task_id>/update`   | Can be optionally updated: `title: str, parent_id: int, description: str, done: bool, tags: list[str], favorite: bool` | `{"status": "ok", "result": {"id": int, "parent_id": int, "title": str, "description": str, "done": bool, "favorite": bool, "created_at": datetime}}` |
 | POST | `/todo/task/<int:task_id>/delete`   | `None`                         | `{"status": "ok", "result": {"deleted": true}}`                                           |
-| GET  | `/todo/task/<int:task_id>/children` | Mismos campos que `search-tasks` pero limitado a subtareas de task_id  | `{"status": "ok", "result": {"tasks": [task...]}}`                  |
+| GET  | `/todo/task/<int:task_id>/children` | Same fields as `search-tasks` but limited to subtasks of if `task_id`  | `{"status": "ok", "result": {"tasks": [task...]}}`                  |
 
 
-## search-tasks
+### search-tasks
 
-Como es una `GET Request` los argumentos de filtro se pasan como parámetros. Por ejemplo:
+Since it is a `GET Request`, filter arguments are passed as query parameters, ie:
 
 `/todo/search-tasks?search_sub_tree=True&done=False&parent_id=9&tags=["apple", "some"]`
 
-Los posibles parametros (todos opcionales) que se le pueden pasar
-son primero los campos basicos del modelo (con excepción de descripción):
+The parameters (all optional) passed can be:
 
- * `done : str` - Para filtrar las tareas completas o no
- * `title : str` - En este caso tiene que ser un match exacto
- * `parent_id : int` - El id de otra task, por lo que limita la búsqueda a las subtareas de esta (se puede hacer el mismo comportamiento con `/todo/task/<int:task_id>/children`)
- * `tags : list[str]` - Un filtro de OR inclusivo para las tareas que se crearon con esas tags.
- * `favorite : bool` - Filtra a tareas que exclusivamente fueron marcadas como favoritas (o no)
+ * `done : str` - Filter done and uncompleted tasks
+ * `title : str` - Must be an exact match
+ * `parent_id : int` - Limits search to subtask of this parent task. (same behavior can be achieved with `/todo/task/<int:task_id>/children`)
+ * `tags : list[str]` - A non exlucive OR filter for tags.
+ * `favorite : bool` - Filter tasks marked as favorite.
+ * `start_time : datetime` - Parsed with isoformat `iso8601`, filter tasks created after date.
+ * `end_time : datetime` - SParsed with isoformat `iso8601`, filter tasks created before date.
+ * `page : int` - As default behavior, a pagination of 50 results exists on queries, so this parameters can be used to fetch further pages.
+ * `search_sub_tree : bool` - Default value: false. If this value is false, the search will not include subtasks
 
-Luego hay unos argumentos especiales (no menos opcionales) para esta request que modifican la búsqueda. Estos son:
+## Style and architecture
 
- * `start_time : datetime` - Se parsea con `iso8601` y filtra las tareas creadas despues de esta datetime
- * `end_time : datetime` - Se parsea con `iso8601` y filtra las tareas creadas antes de esta datetime
- * `page : int` - Por defecto existe una paginación con 50 tareas por pagina, por lo que si una búsqueda particular devuelve muchos elementos, se puede user este argumento para paginar
- * `search_sub_tree : bool` - Si este valor es falso (por defecto), la request filtrará solo por tareas sin madre (no devuelve subtareas)
-
-# Estilo y estructura
-
-Se siguió la estructura recomendada y default de los projectos de django, con estilos de PEP8 para el estilo de codigo
-con ayuda de la herramienta `pycodestyle`
+The recommended architecture for Django proyects was followed, with PEP8 style complicance for Python, helped with the tool `pycodestyle`
 
 ```bash
 pycodestyle . --exclude=venv_*,**migrations**
 ```
 
-# Referencias Usadas
+## References
 
- - [Usar tokens para autenticacion en Django](https://www.django-rest-framework.org/api-guide/authentication/#setting-the-authentication-scheme)
+ - [Use tokens for authentication in Django](https://www.django-rest-framework.org/api-guide/authentication/#setting-the-authentication-scheme)
  - [Django default auth](https://docs.djangoproject.com/en/3.2/topics/auth/default/)
  - [Expose vs publish Docker](https://www.baeldung.com/ops/docker/expose-vs-publish)
  - [Django Pagination](https://docs.djangoproject.com/en/3.2/topics/pagination/)
  - [django-taggit](https://django-taggit.readthedocs.io/en/latest/api.html)
 
-# Problemas conocidos / posibles mejoras
+## Known bugs / potential improvements
 
- - No hay prevención de subtareas circulares
- - La búsqueda por titulo es exacta cuando podría ser más elástica
-   - Posible solución: Incorporar como tags e ignorando stop-words
+ - There's no prevention for circular subtasks
+ - Search with title must be an exact match, when it could be more elastic.
+   - Possible solution: Implements title as tags ignoring stop-wordsPosible solución: Incorporar como tags e ignorando stop-words
